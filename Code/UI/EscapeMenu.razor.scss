@@ -1,0 +1,150 @@
+$bg-dark: hsl(336 0% 1%);
+$bg: hsl(330 0% 4%);
+$bg-light: hsl(0 0% 9%);
+$text: hsl(0 0% 95%);
+$text-muted: hsl(300 0% 69%);
+$highlight: hsl(330 0% 39%);
+$border: hsl(0 0% 28%);
+$border-muted: hsl(300 0% 18%);
+$primary: hsl(212 78% 73%);
+$secondary: hsl(34 59% 62%);
+$danger: hsl(9 26% 64%);
+$warning: hsl(52 19% 57%);
+$success: hsl(146 17% 59%);
+$info: hsl(217 28% 65%);
+
+EscapeMenu
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	// background-color: #444444;
+	background-color: $bg-dark;
+	backdrop-filter: blur(4px);
+	opacity: 0.55;
+	justify-content: center;
+	align-items: center;
+	pointer-events: all;
+	transition: all 0.05s ease;
+	// color: #fff;
+	color: $text;
+	font-family: Arial, Helvetica, sans-serif;
+	
+	.button
+	{
+		padding: 15px 25px;
+		margin: 5px;
+		// background-color: #000000;
+		background-color: $bg-light;
+		border-radius: 3px;
+		font-size: 36px;
+
+		&.reset
+		{
+			justify-content: center;
+			align-items: center;
+			font-size: 20px;
+			padding: 0;
+			width: 25px;
+			height: 25px;
+		}
+
+		&:hover
+		{
+			transition: all 0.15s ease;
+			sound-in: ui.button.over;
+			// background-color: #1c1c1ccf;
+			background-color: $border;
+			cursor: pointer;
+		}
+		
+		&:active
+		{
+			transition: all 0.05s ease;
+			sound-in: ui.button.press;
+			background-color: $highlight;
+		}
+	}
+	
+	&.hidden
+	{
+		opacity: 0;
+	}
+}
+
+.buttons
+{
+	font-weight: bold;
+	flex-direction: column;
+	align-items: center;
+	font-size: 30px;
+	padding: 10px;
+	border-radius: 3px;
+
+}
+
+.panel
+{
+	flex-direction: column;
+	position: absolute;
+	right: 10%;
+	// background-color: #0000004b;
+	background: linear-gradient($bg-light, $bg);
+	padding: 20px, 30px;
+	border-radius: 5px;
+	font-size: 22px;
+	
+	.option
+	{
+		padding: 10px;
+		justify-content: space-between;
+		align-items: center;
+		
+		&.name
+		{
+			width: 250px;
+		}
+		
+		.adjuster
+		{
+			// background-color: #00000075;
+			background-color: $bg-light;
+			border-radius: 3px;
+		}
+		
+		&.value
+		{
+			align-items: center;
+			width: 50px;
+			padding: 5px 10px;
+			// background-color: #0000006d;
+			background-color: $bg-dark;
+		}
+		
+		&.adjust
+		{
+			padding: 12px;
+			align-self: center;
+			font-size: 16px;
+			cursor: pointer;
+			
+			&:hover
+			{
+				transition: all 0.15s ease;
+				sound-in: ui.button.over;
+				// background-color: #00000082;
+				background-color: $border;
+			}
+			
+			&:active
+			{
+				transition: all 0.05s ease;
+				sound-in: ui.button.press;
+				// background-color: #000000b1;
+				background-color: $highlight;
+			}
+		}
+	}
+}

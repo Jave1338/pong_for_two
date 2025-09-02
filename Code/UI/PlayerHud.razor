@@ -1,0 +1,78 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.Network;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+
+	<div class="header">
+
+		<div class="players">
+		@foreach (var player in Connection.All)
+		{
+			if( player.IsHost )
+			{
+				<div class="player">
+					@if (Connection.Local == player)
+					{
+						<div class="name">@player.DisplayName (you)</div>
+					}
+					else
+					{
+						<div class="name">@player.DisplayName</div>
+					}
+					<div class="score">@HostScore</div>
+				</div>
+			}
+			else
+			{
+				<div class="player">
+					@if (Connection.Local == player)
+					{
+						<div class="name">@player.DisplayName (you)</div>
+					}
+					else
+					{
+						<div class="name">@player.DisplayName</div>
+					}
+					<div class="score">@GuestScore</div>
+				</div>
+			}
+		}
+		@if ( Connection.All.Count < 2 )
+		{
+			<div class="player">
+				<div class="name">Bot</div>
+				<div class="score">@GuestScore</div>
+			</div>
+		}
+		</div>
+
+	</div>
+</root>
+
+@code
+{
+	public Connection PlayerHost { get; set; } 
+	public Connection PlayerGuest { get; set; } 
+	GameObject gameManager;
+	public int HostScore;
+	public int GuestScore;
+
+	protected override void OnUpdate()
+	{
+		gameManager = Scene.FindAllWithTag("GameManager").FirstOrDefault();
+
+		PlayerHost = Connection.All.FirstOrDefault( p => p.IsHost );
+		PlayerGuest = Connection.All.FirstOrDefault( p => !p.IsHost );
+
+		HostScore = gameManager.GetComponent<GameManager>().hostScore;
+		GuestScore = gameManager.GetComponent<GameManager>().guestScore;
+	}
+
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( PlayerHost, PlayerGuest, HostScore, GuestScore, gameManager  );
+}

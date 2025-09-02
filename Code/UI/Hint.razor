@@ -1,0 +1,34 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Diagnostics.SymbolStore
+@inherits PanelComponent
+@namespace Sandbox
+
+<root class="@(isVisible ? "" : "hidden")">
+	<div class="title">@text</div>
+</root>
+
+@code
+{
+	public bool isVisible = true;
+	float timer = 0;
+	public string text;
+
+	protected override void OnEnabled()
+	{
+		text = "Press Tab to open the menu";
+	}
+
+	protected override void OnUpdate()
+	{
+		timer += Time.Delta;
+		if ( timer >= 5f )
+		{
+			isVisible = false;
+		}
+	}
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( isVisible, text );
+}

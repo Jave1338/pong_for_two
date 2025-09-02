@@ -1,0 +1,125 @@
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<div class="header">Game Over!</div>
+
+	<div class="body">
+		
+		<div class="title">Results:</div>
+			
+		<div class="results">
+			@foreach (var player in Connection.All)
+			{
+				if( player.IsHost )
+				{
+					<div class="player">
+						@if (Connection.Local == player)
+						{
+							<div class="name">@player.DisplayName (you):</div>
+						}
+						else
+						{
+							<div class="name">@player.DisplayName:</div>
+						}
+						<div class="score">@HostScore</div>
+					</div>
+				}
+				else
+				{
+					<div class="player">
+						@if (Connection.Local == player)
+						{
+							<div class="name">@player.DisplayName (you):</div>
+						}
+						else
+						{
+							<div class="name">@player.DisplayName:</div>
+						}
+						<div class="score">@GuestScore</div>
+					</div>
+				}
+			}
+			@if ( Connection.All.Count < 2 )
+			{
+				<div class="player">
+					<div class="name">Bot:</div>
+					<div class="score">@GuestScore</div>
+				</div>
+			}
+		</div>
+	</div>
+
+	<div class="footer">
+
+		@if (Networking.IsHost)
+		{
+			<div class="button play" onclick="@(() => OnRestart())">
+				<label class="play">Play Again</label>
+			</div>
+		}
+		else
+		{
+			<div class="button disabled">
+				<label class="play">Waiting for the host</label>
+			</div>
+		}
+
+		@if (Networking.IsHost)
+		{
+			<div class="button exit" onclick="@(() => OnExit())">
+				<label class="exit">Go to Lobby</label>
+			</div>
+		}
+		else
+		{
+			<div class="button exit" onclick="@(() => OnExit())">
+				<label class="exit">Exit</label>
+			</div>
+		}
+
+	</div>
+</root>
+
+@code
+{
+	GameObject gameManager;
+	int HostScore;
+	int GuestScore;
+
+	protected override void OnEnabled()
+	{
+		gameManager = Scene.FindAllWithTag("gamemanager").FirstOrDefault();
+
+		HostScore = gameManager.GetComponent<GameManager>().hostScore;
+		GuestScore = gameManager.GetComponent<GameManager>().guestScore;
+	}
+
+	void OnRestart()
+	{
+		SceneLoadOptions load = new SceneLoadOptions();
+		load.SetScene("scenes/game.scene");
+		Game.ChangeScene(load);
+	}
+
+	void OnExit()
+	{
+		if (Networking.IsHost)
+		{
+			SceneLoadOptions load = new SceneLoadOptions();
+			load.SetScene("scenes/Lobby.scene");
+			Game.ChangeScene(load);
+		}
+		else
+		{
+			Networking.Disconnect();
+			Scene.LoadFromFile("scenes/Lobby.scene");
+		}
+	}
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( 123 );
+}

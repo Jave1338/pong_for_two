@@ -1,0 +1,271 @@
+$bg-dark: hsl(336 0% 1%);
+$bg: hsl(330 0% 4%);
+$bg-light: hsl(0 0% 9%);
+$text: hsl(0 0% 95%);
+$text-muted: hsl(300 0% 69%);
+$highlight: hsl(330 0% 39%);
+$border: hsl(0 0% 28%);
+$border-muted: hsl(300 0% 18%);
+$primary: hsl(212 78% 73%);
+$secondary: hsl(34 59% 62%);
+$danger: hsl(9 26% 64%);
+$warning: hsl(52 19% 57%);
+$success: hsl(146 17% 59%);
+$info: hsl(217 28% 65%);
+
+LobbyMenu
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	// background-color: #444444;
+	background-color: $bg-dark;
+	// color: white;
+	color: $text;
+	backdrop-filter: blur(4px);
+	opacity: 0.85;
+	font-weight: bold;
+	pointer-events: all;
+	font-size: 28px;
+	flex-direction: column;
+	padding: 0px 50px;
+	font-family: Arial, Helvetica, sans-serif;
+
+	.button
+	{
+		opacity: 0.7;
+		align-self: center;
+		padding: 10px;
+		border-radius: 2px;
+		// background-color: #00000082;
+		background-color: $bg-light;
+		cursor: pointer;
+
+		&:hover
+		{
+			transition: all 0.15s ease;
+			sound-in: ui.button.over;
+			// background-color: #000000b1;
+			background-color: $border;
+		}
+
+		&:active
+		{
+			transition: all 0.05s ease;
+			sound-in: ui.button.press;
+			// background-color: #000000d1;
+			background-color: $highlight;
+		}
+
+		&.disabled
+		{
+			opacity: 0.2;
+			cursor: not-allowed;
+		
+			&:hover
+			{
+				// background-color: #00000082;
+				background-color: $bg-light;
+			}
+		}
+	}
+}
+
+.header
+{
+	flex-direction: column;
+	padding: 60px, 5%;
+	
+	.title
+	{
+		font-size: 55px;
+		padding: 15px, 0px;
+		font-weight: bolder;
+		font-family: Poppins;
+	}
+	
+	.subtitle
+	{
+		flex-direction: column;
+		padding: 5px, 0px;
+		font-weight: bold;
+		color: $text-muted;
+		
+		.game
+		{
+			align-items: center;
+			flex-direction: row;
+			margin: 5px 0px 10px 0px;
+		}
+	}
+}
+
+.body
+{
+	padding: 2rem, 5%;
+	flex-direction: row;
+	flex-grow: 1;
+	display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+	.playerlist
+	{
+		flex-direction: column;
+		background-color: #0000004b;
+		border-radius: 5px;
+		padding: 20px;
+		align-self: center;
+		background-color: $bg;
+		
+		.player
+		{
+			padding: 10px;
+			margin: 1px;
+			width: 25vw;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			// background-color: #0000001f;
+			background-color: $bg-light;
+			border-radius: 3px;
+			cursor: pointer;
+			
+			.name
+			{
+				
+			}
+	
+			.ping
+			{
+				
+			}
+
+		}
+		.invite
+		{
+			padding: 10px;
+			margin: 1px;
+			width: 25vw;
+			justify-content: center;
+			background-color: #6c6c6c37;
+			color: $text-muted;
+			border: rgba(196, 196, 196, 0.39) 1px solid;
+			border-radius: 5px;
+			font-size: 20px;
+		}
+	}
+
+	.settings
+	{
+		flex-direction: column;
+		// background-color: #0000004b;
+		border-radius: 5px;
+		padding: 20px, 30px;
+		font-size: 20px;
+		align-self: center;
+		background: linear-gradient($bg-light, $bg);
+
+		.option
+		{
+			padding: 10px;
+			opacity: 0.5;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			
+			.option_name
+			{
+				width: 250px;
+			}
+
+			.adjuster
+			{
+				// background-color: #00000075;
+				background-color: $bg-light;
+				border-radius: 3px;
+				color: $text-muted;
+			}
+			
+			.option_value
+			{
+				padding: 5px 10px;
+				// background-color: #0000006d;
+				background-color: $bg-dark;
+				color: $text;
+				align-items: center;
+			}
+			
+			.option_adjust
+			{
+				padding: 12px;
+				align-self: center;
+				font-size: 14px;
+				background-color: $bg-light;
+				cursor: pointer;
+
+				&:hover
+				{
+					transition: all 0.15s ease;
+					sound-in: ui.button.over;
+					// background-color: #00000082;
+					background-color: $border;
+				}
+
+				&:active
+				{
+					transition: all 0.05s ease;
+					sound-in: ui.button.press;
+					// background-color: #000000b1;
+					background-color: $highlight;
+				}
+			}
+		}
+	}
+}
+
+.footer
+{
+	padding: 80px, 5%;
+	flex-direction: row;
+	display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+	bottom: 50px;
+	
+	.button
+	{
+		padding: 30px, 40px;
+		border-radius: 5px;
+		// background-color: #000000;
+		cursor: pointer;
+		
+		&.play
+		{
+			&:hover
+			{
+				background-color: rgba(23, 115, 190, 0.6);
+			}
+
+			&:active
+			{
+				background-color: rgba(23, 115, 190, 1);
+			}
+		}
+		
+		&.exit
+		{
+			&:hover
+			{
+				background-color: rgba(200, 26, 26, 0.6);
+			}
+
+			&:active
+			{
+				background-color: rgba(200, 26, 26, 1);
+			}
+		}
+	}
+}

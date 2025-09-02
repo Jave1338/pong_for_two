@@ -1,0 +1,101 @@
+
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@namespace Sandbox
+
+<root class="@(isEnabled ? "" : "hidden")">
+	<div class="body">
+		<div class="buttons">
+			<div class="button" onclick="@(() => OnClose())">Resume</div>
+			<div class="button" onclick="@(() => OnRestart())">Restart</div>
+			<div class="button" onclick="@(() => OnQuit())">Quit</div>
+		</div>
+	</div>
+
+	<div class="panel">
+		<div class="option">
+				@* <div class="button reset" onclick="@(() => { ResetSens(ref Sensitivity, 1.0f); })">R</div> *@
+				<label class="option name">Sensitivity:</label>
+				<div class="adjuster">
+					<label class="option adjust" onclick=@(() => SetSens("decrement", 0.1f, 0.1f))>&#60;</label>
+					<label class="option value">@Sensitivity</label>
+					<label class="option adjust" onclick=@(() => SetSens("increment", 0.1f, 0.1f))>&#62;</label>
+				</div>
+		</div>
+	</div>
+</root>
+
+@code
+{
+	float Sensitivity = GameSettings.Sensitivity;
+	GameObject ball;
+	GameObject gameOver;
+	bool isEnabled = false;
+
+	protected override void OnEnabled()
+	{
+		ball = Scene.FindAllWithTag("ball").FirstOrDefault();
+		gameOver = Scene.FindAllWithTag("gameover").FirstOrDefault();
+	}
+
+	protected override void OnUpdate()
+	{
+		if (gameOver.Enabled)
+		{
+			isEnabled = false;
+		}
+
+		if ( Input.Pressed("Score"))
+		{
+			if (isEnabled)
+			{
+				isEnabled = false;
+			}
+			else
+			{
+				isEnabled = true;
+			}
+		}
+	}
+
+	void SetSens(string operation, float min, float step)
+	{
+		if (operation == "increment")
+		{
+			Sensitivity = MathF.Round(Math.Max(min, Sensitivity + step), 3);
+			GameSettings.Sensitivity = Sensitivity;
+		}
+		else if (operation == "decrement")
+		{
+			Sensitivity = MathF.Round(Math.Max(min, Sensitivity - step), 3);
+			GameSettings.Sensitivity = Sensitivity;
+		}
+	}
+
+	void ResetSens(ref float variable, float value)
+	{
+		variable = value;
+		GameSettings.Sensitivity = value;
+	}
+
+	void OnClose()
+	{
+		isEnabled = false;
+	}
+
+	void OnRestart()
+	{
+		ball.GetComponent<Ball>().Start();
+	}
+
+	void OnQuit()
+	{
+		Scene.LoadFromFile("scenes/Lobby.scene");
+	}
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( isEnabled);
+}
