@@ -63,6 +63,7 @@ public sealed class Ball : Component, Component.ICollisionListener
 
 	void PushBall()
 	{
+		if ( pushTimerEnabled ) return;
 		for (int i = 0; i < 10;)
 		{
 			Direction = Vector3.Random.WithZ(0);

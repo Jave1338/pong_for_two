@@ -11,7 +11,7 @@
 		<div class="players">
 		@foreach (var player in Connection.All)
 		{
-			if( player.IsHost )
+			if( Networking.IsHost )
 			{
 				<div class="player">
 					@if (Connection.Local == player)
