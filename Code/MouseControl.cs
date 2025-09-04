@@ -23,6 +23,31 @@ public sealed class MouseControl : Component
 			var spawnPoints = Scene.FindAllWithTags( ["spawnpoint", "left"] ).FirstOrDefault();
 			WorldPosition = spawnPoints.WorldPosition;
 		}
+
+		foreach ( var player in Connection.All )
+		{
+			if ( Connection.Local == player )
+			{
+				GetComponent<ModelRenderer>().Tint = GameSettings.Color switch
+				{
+					"blue" => new Color( 0, 0, 170 ),
+					"green" => new Color( 0, 170, 0 ),
+					"cyan" => new Color( 0, 170, 170 ),
+					"red" => new Color( 170, 0, 0 ),
+					"magenta" => new Color( 170, 0, 170 ),
+					"brown" => new Color( 170, 85, 0 ),
+					"gray" => Color.Gray,
+					"lightblue" => new Color( 85, 85, 255 ),
+					"lightgreen" => new Color( 85, 255, 85 ),
+					"lightcyan" => new Color( 85, 255, 255 ),
+					"lightred" => new Color( 255, 85, 85 ),
+					"lightmagenta" => new Color( 255, 85, 255 ),
+					"yellow" => new Color( 255, 255, 85, 1 ),
+					"white" => Color.White,
+					_ => new Color( 255, 255, 255 )
+				};
+			}
+		}
 	}
 
  

@@ -94,6 +94,7 @@ public sealed class Ball : Component, Component.ICollisionListener
 			paddleTouchCount++;
 			phantomTouchCount = 0;
 			Speed += Convert.ToInt32( paddleTouchCount / 50f * GameSettings.Speed );
+			GetComponent<ModelRenderer>().Tint = collision.Other.GameObject.GetComponent<ModelRenderer>().Tint;
 		}
 		else if ( collision.Other.GameObject.Tags.Has( "top" ) || collision.Other.GameObject.Tags.Has( "bottom" ) )
 		{

@@ -33,28 +33,8 @@
 					</div>
 				</div>
 				
-				<div class="palette">
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-					<div class="color"></div>
-				</div>
 
-				<div class="button back" onclick="@(() => OnPlay(false))">
-					<label class="back">Back</label>
-				</div>
+				<div class="button back" onclick="@(() => OnPlay(false))">Back</div>
 			</div>
 
 		</div>
@@ -64,15 +44,13 @@
 			<div class="panel">
 				<div class="option color">
 					<label class="option name">Paddle Color:</label>
-					<div class="adjuster">
-						<label class="option adjust" onclick=>&#60;</label>
-						<label class="option value">Value</label>
-						<label class="option adjust" onclick=>&#62;</label>
-					</div>
+					<div class="button" onclick="@(() => TogglePalette())">
+						<div class="color @GameSettings.Color"></div>
+					</div>					
 				</div>
 
 				<div class="option sens">
-					@* <div class="button reset" onclick="@(() => { ResetSens(ref Sensitivity, 1.0f); })">R</div> *@
+					@* <div class="button reset" onclick="@(() => { ResetSens(1.0f); })">R</div> *@
 					<label class="option name">Sensitivity:</label>
 					<div class="adjuster">
 						<div class="option adjust" onclick=@(() => SetSens("decrement", 0.1f, 0.1f))>&#60;</div>
@@ -81,9 +59,28 @@
 					</div>
 				</div>
 				
-				<div class="button back" onclick="@(() => OnSettings(false))">
-					<label class="back">Back</label>
+				<div class="button back" onclick="@(() => OnSettings(false))">Back</div>
+			</div>
+
+			<div class="palette @(paletteVisible ? "" : "hidden")">
+				<div class="colors">
+					<div class="color blue" onclick="@(() => PickColor("blue"))"></div>
+					<div class="color green" onclick="@(() => PickColor("green"))"></div>
+					<div class="color cyan" onclick="@(() => PickColor("cyan"))"></div>
+					<div class="color red" onclick="@(() => PickColor("red"))"></div>
+					<div class="color magenta" onclick="@(() => PickColor("magenta"))"></div>
+					<div class="color brown" onclick="@(() => PickColor("brown"))"></div>
+					@* <div class="color gray" onclick="@(() => PickColor("gray"))"></div>
+					<div class="color lightblue" onclick="@(() => PickColor("lightblue"))"></div>
+					<div class="color lightgreen" onclick="@(() => PickColor("lightgreen"))"></div>
+					<div class="color lightcyan" onclick="@(() => PickColor("lightcyan"))"></div>
+					<div class="color lightred" onclick="@(() => PickColor("lightred"))"></div>
+					<div class="color lightmagenta" onclick="@(() => PickColor("lightmagenta"))"></div> *@
+					@* <div class="color yellow" onclick="@(() => PickColor("yellow"))"></div> *@
+					<div class="color white" onclick="@(() => PickColor("white"))"></div>
 				</div>
+
+				<div class="button back" onclick="@(() => TogglePalette())">Back</div>
 			</div>
 
 		</div>
@@ -96,6 +93,27 @@
 	float Sensitivity = GameSettings.Sensitivity;
 	bool playVisible = false;
 	bool settingsVisible = false;
+	bool paletteVisible = false;
+
+	void OnPlay(bool setVisible)
+	{
+		if (settingsVisible) return;
+		playVisible = setVisible;
+	}
+
+	void OnSettings(bool setVisible)
+	{
+		if (playVisible) return;
+		settingsVisible = setVisible;
+	}
+
+	void TogglePalette()
+	{
+		if (paletteVisible)
+			paletteVisible = false;
+		else 
+			paletteVisible = true;
+	}
 
 	void SetSens(string operation, float min, float step)
 	{
@@ -111,23 +129,19 @@
 		}
 	}
 
-	void ResetSens(ref float variable, float value)
+	void ResetSens(float value)
 	{
-		variable = value;
+		Sensitivity = value;
 		GameSettings.Sensitivity = value;
 	}
 
-	void OnPlay(bool setVisible)
+	void PickColor(string color)
 	{
-		if (settingsVisible) return;
-		playVisible = setVisible;
+		GameSettings.Color = color;
+		paletteVisible = false;
+		Log.Info(GameSettings.Color);
 	}
 
-	void OnSettings(bool setVisible)
-	{
-		if (playVisible) return;
-		settingsVisible = setVisible;
-	}
 	void OnQuit()
 	{
 		Game.Close();
@@ -136,5 +150,5 @@
 	/// <summary>
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine( settingsVisible, playVisible );
+	protected override int BuildHash() => System.HashCode.Combine( settingsVisible, playVisible, paletteVisible );
 }

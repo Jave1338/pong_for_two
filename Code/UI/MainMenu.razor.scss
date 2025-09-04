@@ -72,6 +72,56 @@ MainMenu
 		{
 			align-self: center;
 		}
+
+		.color
+		{
+			height: 40px;
+			width: 90px;
+			cursor: pointer;
+
+			&.blue{
+				background-color: #0000AA;
+			}
+			&.green{
+				background-color: #00AA00;
+			}
+			&.cyan{
+				background-color: #00AAAA;
+			}
+			&.red{
+				background-color: #AA0000;
+			}
+			&.magenta{
+				background-color: #AA00AA;
+			}
+			&.brown{
+				background-color: #AA5500;
+			}
+			&.gray{
+				background-color: gray;
+			}
+			&.lightblue{
+				background-color: #5555FF;
+			}
+			&.lightgreen{
+				background-color: #55FF55;
+			}
+			&.lightcyan{
+				background-color: #55FFFF;
+			}
+			&.lightred{
+				background-color: #FF5555;
+			}
+			&.lightmagenta{
+				background-color: #FF55FF;
+			}
+			&.yellow{
+				background-color: #FFFF55;
+			}
+			&.white{
+				background-color: #FFFFFF;
+			}
+		}
 	}
 }
 
@@ -159,6 +209,7 @@ MainMenu
 	
 		.option
 		{
+			font-size: 26px;
 			padding: 10px;
 			justify-content: space-between;
 			align-items: center;
@@ -169,7 +220,7 @@ MainMenu
 				{
 					&.value
 					{
-						width: 56px;
+						width: 54px;
 						padding: 5px 10px;
 						// background-color: #0000006d;
 						background-color: $bg-dark;
@@ -177,7 +228,7 @@ MainMenu
 					}
 				}
 			}
-
+			
 			&.name
 			{
 				width: 300px;
@@ -222,6 +273,96 @@ MainMenu
 					// background-color: #000000b1;
 					background-color: $highlight;
 				}
+			}
+		}
+		
+		.palette
+		{
+			opacity: 1.45;
+			position: absolute;
+			top: 38%;
+			bottom: 38%;
+			left: 28%;
+			right: 28%;
+			flex-direction: column;
+			background: linear-gradient($bg-light, $bg);
+			padding: 30px;
+			border-radius: 5px;
+			font-size: 30px;
+
+			.colors
+			{
+				flex-direction: row;
+				flex-wrap: wrap;
+				flex-grow: 1;
+				align-self: center;
+				gap: 20px;
+				
+				.color
+				{
+					border: $bg-light 2px solid;
+					height: 40px;
+					width: 90px;
+					cursor: pointer;
+		
+					&:hover
+					{
+						border: $border 2px solid;
+					}
+		
+					&:active
+					{
+						border: $highlight 2px solid;
+					}
+		
+					&.blue{
+						background-color: #0000AA;
+					}
+					&.green{
+						background-color: #00AA00;
+					}
+					&.cyan{
+						background-color: #00AAAA;
+					}
+					&.red{
+						background-color: #AA0000;
+					}
+					&.magenta{
+						background-color: #AA00AA;
+					}
+					&.brown{
+						background-color: #AA5500;
+					}
+					&.gray{
+						background-color: gray;
+					}
+					&.lightblue{
+						background-color: #5555FF;
+					}
+					&.lightgreen{
+						background-color: #55FF55;
+					}
+					&.lightcyan{
+						background-color: #55FFFF;
+					}
+					&.lightred{
+						background-color: #FF5555;
+					}
+					&.lightmagenta{
+						background-color: #FF55FF;
+					}
+					&.yellow{
+						background-color: #FFFF55;
+					}
+					&.white{
+						background-color: #FFFFFF;
+					}
+				}
+			}
+			
+			&.hidden
+			{
+				opacity: 0;
 			}
 		}
 		

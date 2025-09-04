@@ -2052,7 +2052,7 @@
           {
             "Target": {
               "Type": "Component",
-              "IdValue": "127338c2-a154-4906-85f8-1971e9ab65b4"
+              "IdValue": "6e060a8d-51c1-4ed8-800a-e63565d5455f"
             },
             "Property": "isBot",
             "Value": true
@@ -2062,11 +2062,11 @@
       },
       "__PrefabIdToInstanceId": {
         "9218a547-6c4d-4c80-869a-ab2ebb159f8a": "ddadcc3e-c94c-49be-a060-c2f477ba5a11",
-        "127338c2-a154-4906-85f8-1971e9ab65b4": "ed81d9b7-46ed-4032-bcaf-8c8733ad921c",
         "bb62cb33-a4f0-49d6-9c30-a53fb1c30df5": "90dcaef6-8600-4b09-a62a-e72cdc1942f5",
-        "8feeaabb-1fb7-425e-a80d-3fe60518ea23": "bda00f60-ac3f-4c0a-8e57-9fd920df31f8",
-        "b1b86532-ebb2-4c3d-ae13-e18f5e46b274": "0ad4591a-0fce-4407-af81-0864f3117ea0",
-        "d7b70cd3-b317-4c27-b010-3629a73ae74e": "a61712be-fcce-438a-9203-e803b6adea6e"
+        "d7b70cd3-b317-4c27-b010-3629a73ae74e": "a61712be-fcce-438a-9203-e803b6adea6e",
+        "5446bb96-8a03-4f2a-8361-1ce9e795704f": "dc075168-30af-4564-abd9-529fe4d99c99",
+        "faed5647-be33-4a5d-aa7c-8b2fb9e0c260": "70b2c48a-cf35-49c3-8832-a8b06af1e5be",
+        "6e060a8d-51c1-4ed8-800a-e63565d5455f": "91363ab6-0d1b-4602-9fbb-9f921aa900ed"
       }
     }
   ],

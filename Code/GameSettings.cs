@@ -40,4 +40,11 @@ public static class GameSettings
 		get => _sensitivity;
 		set { _sensitivity = value; }
 	}
+
+	private static string _color = "white";
+	public static string Color
+	{
+		get => _color;
+		set { _color = value; }
+	}
 }
