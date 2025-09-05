@@ -2,6 +2,7 @@
 @using Sandbox;
 @using Sandbox.UI;
 @using Sandbox.Network;
+@using System.Runtime.CompilerServices
 @inherits PanelComponent
 @namespace Sandbox
 
@@ -26,12 +27,12 @@
 
 		<div class="playerlist">
 
-			@foreach (var player in Connection.All)
+			@* @foreach (var player in Connection.All)
 			{
 
 				<div class="player">
 					<div class="name">
-						@if (Networking.IsHost)
+						@if (player.IsHost)
 						{
 							<div>[Host]</div>
 							if (player != Connection.Local)
@@ -42,7 +43,30 @@
 						@player.DisplayName
 					</div>
 					<div class="ping">
-						<img src="\icons\signal_cellular_alt.png" style="width: 35px; margin: 0px 5px;" alt="Ping" /> @player.Ping
+						<img src="\icons\signal_cellular_alt.png" style="width: 35px; margin: 0px 5px;" alt="Ping" /> @player.Latency
+					</div>
+				</div>
+			} *@
+
+			@foreach (var player in Connection.All)
+			{
+				<div class="player">
+					<div class="left">
+						@if (player.IsHost)
+						{
+							<div class="prefix">[Host]</div>
+						}
+						@if (Networking.IsHost && !player.IsHost)
+						{
+							<div class="prefix" onclick="@(() => player.Kick("You were kicked by the host"))">❌</div>
+						}
+						<div class="name">@player.DisplayName</div>
+					</div>
+
+					<div class="right">
+						<div class="ping">
+							<img src="@pingIcon" style="width: 35px; margin: 0px 5px;" alt="Ping" />@player.Latency
+						</div>
 					</div>
 				</div>
 			}
@@ -129,18 +153,45 @@
 
 		</div>
 
+		<div class="panel_background @(paletteVisible ? "" : "hidden")">
+			<div class="palette">
+				<div class="colors">
+					<div class="color blue" onclick="@(() => PickColor("blue"))"></div>
+					<div class="color green" onclick="@(() => PickColor("green"))"></div>
+					<div class="color cyan" onclick="@(() => PickColor("cyan"))"></div>
+					<div class="color red" onclick="@(() => PickColor("red"))"></div>
+					<div class="color magenta" onclick="@(() => PickColor("magenta"))"></div>
+					<div class="color brown" onclick="@(() => PickColor("brown"))"></div>
+					@* <div class="color gray" onclick="@(() => PickColor("gray"))"></div>
+					<div class="color lightblue" onclick="@(() => PickColor("lightblue"))"></div>
+					<div class="color lightgreen" onclick="@(() => PickColor("lightgreen"))"></div>
+					<div class="color lightcyan" onclick="@(() => PickColor("lightcyan"))"></div>
+					<div class="color lightred" onclick="@(() => PickColor("lightred"))"></div>
+					<div class="color lightmagenta" onclick="@(() => PickColor("lightmagenta"))"></div> *@
+					@* <div class="color yellow" onclick="@(() => PickColor("yellow"))"></div> *@
+					<div class="color white" onclick="@(() => PickColor("white"))"></div>
+				</div>
+
+				<div class="button back" onclick="@(() => TogglePalette())">Back</div>
+			</div>
+		</div>
+
 	</div>
 
 	<div class="footer">
 
-		@if (Networking.IsHost)
-		{
-			<div class="button play" onclick="@(() => OnPlay())">Play</div>
-		}
-		else
-		{
-			<div class="button disabled">Waiting for the host</div>
-		}
+		<div class="left">
+			@if (Networking.IsHost)
+			{
+				<div class="button play" onclick="@(() => OnPlay())">Play</div>
+			}
+			else
+			{
+				<div class="button disabled">Waiting for the host</div>
+			}
+
+			<div class="button color" onclick="@(() => TogglePalette())" style="color: @GameSettings.Color;">Change color</div>
+		</div>
 
 		<div class="button exit" onclick="@(() => OnLeaveLobby())">Leave</div>
 
@@ -155,6 +206,8 @@
 	[Sync] public int Speed { get; set; }
 	[Sync] public bool Acceleration { get; set; }
 	[Sync] public string accelerationText { get; set; }
+	bool paletteVisible = false;
+	[Property, ImageAssetPath] string pingIcon {get; set;}
 
 	public LobbyMenu()
 	{
@@ -239,6 +292,21 @@
 		{
 			Acceleration = true;
 		}
+	}
+
+	void TogglePalette()
+	{
+		if (paletteVisible)
+			paletteVisible = false;
+		else 
+			paletteVisible = true;
+	}
+
+	void PickColor(string color)
+	{
+		GameSettings.Color = color;
+		paletteVisible = false;
+		Log.Info(GameSettings.Color);
 	}
 
 	void OnReset()

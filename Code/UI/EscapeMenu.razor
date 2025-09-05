@@ -105,7 +105,17 @@
 
 	void OnQuit()
 	{
-		Scene.LoadFromFile("scenes/Lobby.scene");
+		if (Networking.IsHost)
+		{
+			SceneLoadOptions load = new SceneLoadOptions();
+			load.SetScene("scenes/lobby.scene");
+			Game.ChangeScene(load);
+		}
+		else
+		{
+			Networking.Disconnect();
+			Scene.LoadFromFile("scenes/lobby.scene");
+		}
 	}
 
 	/// <summary>

@@ -908,7 +908,7 @@
           "__guid": "1d955927-52ea-49df-bad5-ef2c587a6d9c",
           "__version": 1,
           "Flags": 0,
-          "Name": "Menu",
+          "Name": "Lobby UI",
           "Position": "0,0,0",
           "Rotation": "0,0,0,1",
           "Scale": "1,1,1",
@@ -945,7 +945,8 @@
               "OnComponentEnabled": null,
               "OnComponentFixedUpdate": null,
               "OnComponentStart": null,
-              "OnComponentUpdate": null
+              "OnComponentUpdate": null,
+              "pingIcon": "icons/signal_cellular_alt.png"
             }
           ],
           "Children": []

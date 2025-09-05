@@ -15,6 +15,7 @@ public sealed class Ball : Component, Component.ICollisionListener
 	[Sync] public Vector3 Direction { get; set; }
 	float paddleTouchCount = 0;
 	float phantomTouchCount = 0;
+	[Sync] public Color Color { get; set; } = Color.White;
 
 	protected override void OnEnabled()
 	{
@@ -31,6 +32,7 @@ public sealed class Ball : Component, Component.ICollisionListener
 			Speed = GameSettings.Speed;
 		}
 
+		GetComponent<ModelRenderer>().Tint = Color;
 		LocalRotation = Rotation.Identity;
 
 		if ( pushTimerEnabled )
@@ -52,6 +54,7 @@ public sealed class Ball : Component, Component.ICollisionListener
 	{
 		GetComponent<Rigidbody>().Velocity = Vector3.Zero;
 		Speed = GameSettings.Speed;
+		Color = Color.White;
 
 		var random = new Random();
 		WorldPosition = new Vector3( 0, random.Next( -120, 120 ), 7 );
@@ -94,7 +97,7 @@ public sealed class Ball : Component, Component.ICollisionListener
 			paddleTouchCount++;
 			phantomTouchCount = 0;
 			Speed += Convert.ToInt32( paddleTouchCount / 50f * GameSettings.Speed );
-			GetComponent<ModelRenderer>().Tint = collision.Other.GameObject.GetComponent<ModelRenderer>().Tint;
+			Color = collision.Other.GameObject.GetComponent<ModelRenderer>().Tint;
 		}
 		else if ( collision.Other.GameObject.Tags.Has( "top" ) || collision.Other.GameObject.Tags.Has( "bottom" ) )
 		{

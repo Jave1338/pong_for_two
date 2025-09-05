@@ -24,6 +24,15 @@ public sealed class GameManager : Component
 
 	protected override void OnUpdate()
 	{
+		if ( !isAlone && Connection.All.Count < 2 )
+		{
+			ToggleBot(true);
+		}
+		else if ( isAlone && Connection.All.Count > 1 )
+		{
+			ToggleBot(false);
+		}
+
 		if ( Input.Down( "jump" ) )
 		{
 			Scene.TimeScale = 0.5f;
@@ -32,15 +41,24 @@ public sealed class GameManager : Component
 		{
 			Scene.TimeScale = 1f;
 		}
+	}
 
-		if (isAlone && Connection.All.Count > 1 )
+	void ToggleBot(bool enable)
+	{
+		if ( enable )
 		{
-			bot.Destroy();
-			isAlone = false;
-			Scene.FindAllWithTag( "ball" ).FirstOrDefault().GetComponent<Ball>().Start();
-			hostScore = 0;
-			guestScore = 0;
+			isAlone = true;
+			bot.Enabled = true;
+
 		}
+		else
+		{
+			isAlone = false;
+			bot.Enabled = false;
+		}
+		Scene.FindAllWithTag( "ball" ).FirstOrDefault().GetComponent<Ball>().Start();
+		hostScore = 0;
+		guestScore = 0;
 	}
 
 	public void ChangeScore(string side)
