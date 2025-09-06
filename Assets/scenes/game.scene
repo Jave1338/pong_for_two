@@ -1964,7 +1964,8 @@
               "OnComponentEnabled": null,
               "OnComponentFixedUpdate": null,
               "OnComponentStart": null,
-              "OnComponentUpdate": null
+              "OnComponentUpdate": null,
+              "pingIcon": "icons/signal_cellular_alt.png"
             }
           ],
           "Children": []

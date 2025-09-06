@@ -14,21 +14,49 @@
 		</div>
 	</div>
 
-	<div class="panel">
+	<div class="panel right">
 		<div class="option">
-				@* <div class="button reset" onclick="@(() => { ResetSens(ref Sensitivity, 1.0f); })">R</div> *@
-				<label class="option name">Sensitivity:</label>
-				<div class="adjuster">
-					<label class="option adjust" onclick=@(() => SetSens("decrement", 0.1f, 0.1f))>&#60;</label>
-					<label class="option value">@Sensitivity</label>
-					<label class="option adjust" onclick=@(() => SetSens("increment", 0.1f, 0.1f))>&#62;</label>
+			@* <div class="button reset" onclick="@(() => { ResetSens(ref Sensitivity, 1.0f); })">R</div> *@
+			<label class="option name">Sensitivity:</label>
+			<div class="adjuster">
+				<label class="option adjust" onclick=@(() => SetSens("decrement", 0.1f, 0.1f))>&#60;</label>
+				<label class="option value">@Sensitivity</label>
+				<label class="option adjust" onclick=@(() => SetSens("increment", 0.1f, 0.1f))>&#62;</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel left">
+		<div class="playerlist">
+			@foreach (var player in Connection.All)
+			{
+				<div class="player">
+					<div class="left">
+						@if (player.IsHost)
+						{
+							<div class="prefix">[Host]</div>
+						}
+						@if (Networking.IsHost && !player.IsHost)
+						{
+							<div class="prefix" onclick="@(() => player.Kick("You were kicked by the host"))">❌</div>
+						}
+						<div class="name">@player.DisplayName</div>
+					</div>
+
+					<div class="right">
+						<div class="ping">
+							<img src="@pingIcon" style="width: 35px; margin: 0px 5px;" alt="Ping" />@player.Latency
+						</div>
+					</div>
 				</div>
+			}
 		</div>
 	</div>
 </root>
 
 @code
 {
+	[Property, ImageAssetPath] string pingIcon {get; set;}
 	float Sensitivity = GameSettings.Sensitivity;
 	GameObject ball;
 	GameObject gameOver;
@@ -121,5 +149,5 @@
 	/// <summary>
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine( isEnabled );
+	protected override int BuildHash() => System.HashCode.Combine( isEnabled, Connection.All.Count );
 }

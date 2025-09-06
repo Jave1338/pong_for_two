@@ -27,27 +27,6 @@
 
 		<div class="playerlist">
 
-			@* @foreach (var player in Connection.All)
-			{
-
-				<div class="player">
-					<div class="name">
-						@if (player.IsHost)
-						{
-							<div>[Host]</div>
-							if (player != Connection.Local)
-							{
-								<div class="prefix" onclick="@(() => player.Kick("You were kicked by the host"))">❌</div>
-							}
-						}
-						@player.DisplayName
-					</div>
-					<div class="ping">
-						<img src="\icons\signal_cellular_alt.png" style="width: 35px; margin: 0px 5px;" alt="Ping" /> @player.Latency
-					</div>
-				</div>
-			} *@
-
 			@foreach (var player in Connection.All)
 			{
 				<div class="player">
