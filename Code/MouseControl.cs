@@ -8,7 +8,6 @@ using System.Globalization;
 
 public sealed class MouseControl : Component
 {
-	[Property, Title("Lock X Axis")] public bool Lock { get; set; } = true;
 	[Property] float borderY = 133.5f;
 	[Property] bool isBot = false;
 	GameObject ball;
@@ -29,7 +28,6 @@ public sealed class MouseControl : Component
 			var spawnPoints = Scene.FindAllWithTags( ["spawnpoint", "left"] ).FirstOrDefault();
 			WorldPosition = spawnPoints.WorldPosition;
 		}
-
 
 		SetColor();
 	}

@@ -56,28 +56,20 @@
 
 		@if (Networking.IsHost)
 		{
-			<div class="button play" onclick="@(() => OnRestart())">
-				<label class="play">Play Again</label>
-			</div>
+			<div class="button play" onclick="@(() => OnRestart())">Play Again</div>
 		}
 		else
 		{
-			<div class="button disabled">
-				<label class="play">Waiting for the host</label>
-			</div>
+			<div class="button disabled">Waiting for the host</div>
 		}
 
 		@if (Networking.IsHost)
 		{
-			<div class="button exit" onclick="@(() => OnExit())">
-				<label class="exit">Go to Lobby</label>
-			</div>
+			<div class="button exit" onclick="@(() => OnExit())">Go to Lobby</div>
 		}
 		else
 		{
-			<div class="button exit" onclick="@(() => OnExit())">
-				<label class="exit">Exit</label>
-			</div>
+			<div class="button exit" onclick="@(() => OnExit())">Exit Lobby</div>
 		}
 
 	</div>
@@ -93,8 +85,8 @@
 	{
 		gameManager = Scene.FindAllWithTag("gamemanager").FirstOrDefault();
 
-		HostScore = gameManager.GetComponent<GameManager>().hostScore;
-		GuestScore = gameManager.GetComponent<GameManager>().guestScore;
+		HostScore = gameManager.GetComponent<GameManager>().HostScore;
+		GuestScore = gameManager.GetComponent<GameManager>().GuestScore;
 	}
 
 	void OnRestart()

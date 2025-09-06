@@ -11,9 +11,9 @@
 		<div class="players">
 		@foreach (var player in Connection.All)
 		{
-			if( Networking.IsHost )
-			{
-				<div class="player">
+			<div class="player">
+				@if( player.IsHost )
+				{
 					@if (Connection.Local == player)
 					{
 						<div class="name">@player.DisplayName (you)</div>
@@ -23,11 +23,9 @@
 						<div class="name">@player.DisplayName</div>
 					}
 					<div class="score">@HostScore</div>
-				</div>
-			}
-			else
-			{
-				<div class="player">
+				}
+				else
+				{
 					@if (Connection.Local == player)
 					{
 						<div class="name">@player.DisplayName (you)</div>
@@ -37,8 +35,8 @@
 						<div class="name">@player.DisplayName</div>
 					}
 					<div class="score">@GuestScore</div>
-				</div>
-			}
+				}
+			</div>
 		}
 		@if ( Connection.All.Count < 2 )
 		{
@@ -57,22 +55,30 @@
 	public Connection PlayerHost { get; set; } 
 	public Connection PlayerGuest { get; set; } 
 	GameObject gameManager;
-	public int HostScore;
-	public int GuestScore;
+	[Sync] public int HostScore {get; set;}
+	[Sync] public int GuestScore {get; set;}
 
-	protected override void OnUpdate()
+	protected override void OnEnabled()
 	{
-		gameManager = Scene.FindAllWithTag("GameManager").FirstOrDefault();
+		gameManager = Scene.FindAllWithTag("GameManager")?.FirstOrDefault();
 
 		PlayerHost = Connection.All.FirstOrDefault( p => p.IsHost );
 		PlayerGuest = Connection.All.FirstOrDefault( p => !p.IsHost );
+	}
 
-		HostScore = gameManager.GetComponent<GameManager>().hostScore;
-		GuestScore = gameManager.GetComponent<GameManager>().guestScore;
+	protected override void OnUpdate()
+	{
+		HostScore = gameManager.GetComponent<GameManager>().HostScore;
+		GuestScore = gameManager.GetComponent<GameManager>().GuestScore;
 	}
 
 	/// <summary>
 	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
 	/// </summary>
-	protected override int BuildHash() => System.HashCode.Combine( PlayerHost, PlayerGuest, HostScore, GuestScore  );
+	protected override int BuildHash() => System.HashCode.Combine( 
+		PlayerHost, 
+		PlayerGuest, 
+		HostScore, 
+		GuestScore
+		);
 }

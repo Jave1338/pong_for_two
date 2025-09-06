@@ -946,7 +946,7 @@
               "OnComponentFixedUpdate": null,
               "OnComponentStart": null,
               "OnComponentUpdate": null,
-              "pingIcon": "icons/new material.vmat"
+              "pingIcon": "icons/signal_cellular_alt.png"
             }
           ],
           "Children": []

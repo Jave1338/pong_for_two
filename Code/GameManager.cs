@@ -7,8 +7,8 @@ public sealed class GameManager : Component
 	[Property] GameObject bot;
 	[Property] GameObject gameOver;
 
-	[Sync] public int hostScore { get; set; }
-	[Sync] public int guestScore { get; set; }
+	[Sync] public int HostScore { get; set; }
+	[Sync] public int GuestScore { get; set; }
 	bool isAlone;
 
 	protected override void OnEnabled()
@@ -49,7 +49,6 @@ public sealed class GameManager : Component
 		{
 			isAlone = true;
 			bot.Enabled = true;
-
 		}
 		else
 		{
@@ -57,22 +56,22 @@ public sealed class GameManager : Component
 			bot.Enabled = false;
 		}
 		Scene.FindAllWithTag( "ball" ).FirstOrDefault().GetComponent<Ball>().Start();
-		hostScore = 0;
-		guestScore = 0;
+		HostScore = 0;
+		GuestScore = 0;
 	}
 
 	public void ChangeScore(string side)
 	{
 		if ( side == "right" )
 		{
-			guestScore++;
+			GuestScore++;
 		}
 		else if ( side == "left" )
 		{
-			hostScore++;
+			HostScore++;
 		}
 
-		if ( hostScore + guestScore >= GameSettings.MaxRounds )
+		if ( HostScore + GuestScore >= GameSettings.MaxRounds )
 		{
 			GameOver();
 		}

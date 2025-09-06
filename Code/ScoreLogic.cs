@@ -15,7 +15,7 @@ public sealed class ScoreLogic : Component, Component.ITriggerListener
 		if ( other.Tags.Has("ball"))
 		{
 			gameManager.GetComponent<GameManager>().ChangeScore( GameObject.Tags.ToString() );
-			other.GetComponent<Ball>().Start();
+			other.GetComponent<Ball>()?.Start();
 		}
 	}
 }
