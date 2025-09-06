@@ -60,10 +60,7 @@
             "_type": "gameobject",
             "go": "ddadcc3e-c94c-49be-a060-c2f477ba5a11"
           },
-          "gameOver": {
-            "_type": "gameobject",
-            "go": "88126116-b5d4-4324-85e7-9b41ba80154b"
-          },
+          "gameOver": null,
           "OnComponentDestroy": null,
           "OnComponentDisabled": null,
           "OnComponentEnabled": null,
