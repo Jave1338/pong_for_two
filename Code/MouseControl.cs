@@ -1,6 +1,10 @@
 using Sandbox;
+using System.Windows;
+using System.Drawing;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System;
+using System.Globalization;
 
 public sealed class MouseControl : Component
 {
@@ -27,14 +31,14 @@ public sealed class MouseControl : Component
 		}
 
 
+		SetColor();
 	}
 
 	protected override void OnUpdate()
 	{
-		GameObject.Network.SetOwnerTransfer( OwnerTransfer.Takeover );
+		//GameObject.Network.SetOwnerTransfer( OwnerTransfer.Takeover );
 		if ( IsProxy ) return;
-		GameObject.Network.TakeOwnership();
-		SetColor();
+		//GameObject.Network.TakeOwnership();
 
 		if (!isBot)
 		{
@@ -62,6 +66,7 @@ public sealed class MouseControl : Component
 		if ( isBot )
 		{
 			GetComponent<ModelRenderer>().Tint = Color.White;
+			return;
 		}
 
 		PaddleColor = GameSettings.Color;
@@ -69,22 +74,21 @@ public sealed class MouseControl : Component
 		{
 			"blue" => new Color( 0, 0, 170 ),
 			"green" => new Color( 0, 170, 0 ),
-			"cyan" => new Color( 0, 170, 170 ),
-			"red" => new Color( 170, 0, 0 ),
-			"magenta" => new Color( 170, 0, 170 ),
-			"brown" => new Color( 170, 85, 0 ),
+			"darkcyan" => new Color( 0, 170, 170 ),
+			"red" => new Color( 20, 0, 0 ),
+			"purple" => new Color( 8388736 ).WithAlpha(1),
+			"saddlebrown" => new Color( 3607296 ).WithAlpha(1).AdjustHue(-220),
 			"gray" => Color.Gray,
-			"lightblue" => new Color( 85, 85, 255 ),
-			"lightgreen" => new Color( 85, 255, 85 ),
-			"lightcyan" => new Color( 85, 255, 255 ),
-			"lightred" => new Color( 255, 85, 85 ),
-			"lightmagenta" => new Color( 255, 85, 255 ),
-			"yellow" => new Color( 255, 255, 85, 1 ),
+			"lightblue" => Color.FromRgba( UInt32.Parse( "F47EFff", NumberStyles.HexNumber ) ),
+			"lightgreen" => Color.FromRgba(UInt32.Parse( "4bd14eff", NumberStyles.HexNumber ) ),
+			"cyan" => Color.FromRgba(UInt32.Parse( "00FFFFff", NumberStyles.HexNumber ) ),
+			"lightcoral" => Color.FromRgba( UInt32.Parse( "EA3434ff", NumberStyles.HexNumber ) ),
+			"violet" => Color.FromRgba( UInt32.Parse( "EB3DEBff", NumberStyles.HexNumber ) ),
+			"yellow" => Color.FromRgba( UInt32.Parse( "FFFF00ff", NumberStyles.HexNumber ) ),
 			"white" => Color.White,
 			_ => new Color( 255, 255, 255 )
 		};
 
 		Network.Refresh();
-		//GetComponent<ModelRenderer>().Tint = PaddleColor;
 	}
 }

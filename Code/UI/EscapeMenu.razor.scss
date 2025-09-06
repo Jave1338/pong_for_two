@@ -31,6 +31,7 @@ EscapeMenu
 	// color: #fff;
 	color: $text;
 	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	
 	.button
 	{
@@ -109,7 +110,7 @@ EscapeMenu
 		flex-direction: column;
 		background-color: #0000004b;
 		border-radius: 5px;
-		padding: 20px;
+		padding: 10px;
 		align-self: center;
 		background-color: $bg;
 		
@@ -167,7 +168,7 @@ EscapeMenu
 		&.value
 		{
 			align-items: center;
-			width: 50px;
+			width: 51px;
 			padding: 5px 10px;
 			// background-color: #0000006d;
 			background-color: $bg-dark;
