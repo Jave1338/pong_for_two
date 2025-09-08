@@ -115,14 +115,4 @@ public sealed class Ball : Component, Component.ICollisionListener
 		collision.Self.Body.Velocity = Direction.Normal * Speed;
 		collision.Self.Body.AngularVelocity = 0;
 	}
-
-	void AddAngle( ref Vector3 vector )
-	{
-		float angle = MathF.Atan2( vector.y, vector.x );
-
-		var random = new Random();
-		float newAngle = angle + (random.Next( -5, 5 ) / 10);
-
-		vector = new Vector3( MathF.Cos(newAngle), MathF.Sin(newAngle));
-	}
 }

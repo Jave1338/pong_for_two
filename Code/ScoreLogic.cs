@@ -2,19 +2,19 @@ namespace Sandbox;
 
 public sealed class ScoreLogic : Component, Component.ITriggerListener
 {
-	GameObject gameManager;
+	[Property] GameManager gameManager;
 
 	protected override void OnEnabled()
 	{
 		base.OnEnabled();
-		gameManager = Scene.FindAllWithTag( "GameManager" ).FirstOrDefault();
+		gameManager = Scene.Get<GameManager>();
 	}
 
 	public void OnTriggerEnter( GameObject other )
 	{
 		if ( other.Tags.Has("ball"))
 		{
-			gameManager.GetComponent<GameManager>().ChangeScore( GameObject.Tags.ToString() );
+			gameManager.ChangeScore( GameObject.Tags.ToString() );
 			other.GetComponent<Ball>()?.Start();
 		}
 	}

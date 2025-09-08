@@ -8,52 +8,89 @@ using System.Globalization;
 
 public sealed class MouseControl : Component
 {
-	[Property] float borderY = 133.5f;
+	[Property] bool lockXAxis;
+	[Property] bool lockYAxis;
+	[Property] float border = 130;
 	[Property] bool isBot = false;
 	GameObject ball;
-	[Sync(SyncFlags.Query)] string PaddleColor { get; set; } = "white";
+	GameManager gameManager;
 
     protected override void OnEnabled()
     {
         base.OnEnabled();
 		ball = Scene.FindAllWithTag( "ball" ).FirstOrDefault();
-
-		if (Networking.IsHost)
-		{
-			var spawnPoints = Scene.FindAllWithTags( ["spawnpoint", "right"] ).FirstOrDefault();
-			WorldPosition = spawnPoints.WorldPosition;
-		}
-		else if (!Networking.IsHost)
-		{
-			var spawnPoints = Scene.FindAllWithTags( ["spawnpoint", "left"] ).FirstOrDefault();
-			WorldPosition = spawnPoints.WorldPosition;
-		}
+		gameManager = Scene.Get<GameManager>();
 
 		SetColor();
 	}
 
+	protected override void OnStart()
+	{
+		base.OnStart();
+
+		if ( gameManager.sceneName == "game" )
+		{
+			lockXAxis = true;
+			lockYAxis = false;
+			
+			if (Networking.IsHost)
+			{
+				var spawnPoint = Scene.FindAllWithTags( ["spawnpoint", "right"] ).FirstOrDefault();
+				WorldPosition = spawnPoint.WorldPosition;
+				WorldRotation = spawnPoint.WorldRotation;
+			}
+			else if (!Networking.IsHost)
+			{
+				var spawnPoint = Scene.FindAllWithTags( ["spawnpoint", "left"] ).FirstOrDefault();
+				WorldPosition = spawnPoint.WorldPosition;
+				WorldRotation = spawnPoint.WorldRotation;
+			}
+		}
+		else if ( Scene.Name == "game4" )
+		{
+			if ( Networking.IsHost )
+			{
+				lockXAxis = false;
+				lockYAxis = true;
+				var spawnPoint = Scene.FindAllWithTags( ["spawnpoint", "bottom"] ).FirstOrDefault();
+				WorldPosition = spawnPoint.WorldPosition;
+			}
+		}
+	}
+
 	protected override void OnUpdate()
 	{
-		//GameObject.Network.SetOwnerTransfer( OwnerTransfer.Takeover );
 		if ( IsProxy ) return;
-		//GameObject.Network.TakeOwnership();
+
+
 
 		if (!isBot)
 		{
-			WorldPosition += new Vector3( 0, -Input.MouseDelta.y * GameSettings.Sensitivity, 0 );
+			WorldPosition += new Vector3( 
+				lockXAxis ? 0 : Input.MouseDelta.x * GameSettings.Sensitivity, 
+				lockYAxis ? 0 : -Input.MouseDelta.y * GameSettings.Sensitivity, 
+				0 );
 		}
 		else
 		{
 			WorldPosition = new Vector3( -275, ball.WorldPosition.y, WorldPosition.z );
 		}
 
-		if ( WorldPosition.y >= borderY )
+		if ( lockXAxis && WorldPosition.y >= border )
 		{
-			WorldPosition = new Vector3( WorldPosition.x, borderY, WorldPosition.z );
+			WorldPosition = new Vector3( WorldPosition.x, border, WorldPosition.z );
 		}
-		else if ( WorldPosition.y <= -borderY )
+		if ( lockXAxis && WorldPosition.y <= -border )
 		{
-			WorldPosition = new Vector3( WorldPosition.x, -borderY, WorldPosition.z );
+			WorldPosition = new Vector3( WorldPosition.x, -border, WorldPosition.z );
+		}
+		if ( lockYAxis && WorldPosition.x >= border )
+		{
+			WorldPosition = new Vector3( border, WorldPosition.y, WorldPosition.z );
+		}
+		if ( lockYAxis && WorldPosition.x <= -border )
+		{
+			WorldPosition = new Vector3( -border, WorldPosition.y, WorldPosition.z );
 		}
 	}
 
@@ -67,8 +104,7 @@ public sealed class MouseControl : Component
 			return;
 		}
 
-		PaddleColor = GameSettings.Color;
-		GetComponent<ModelRenderer>().Tint = PaddleColor switch
+		GetComponent<ModelRenderer>().Tint = GameSettings.Color switch
 		{
 			"blue" => new Color( 0, 0, 170 ),
 			"green" => new Color( 0, 170, 0 ),

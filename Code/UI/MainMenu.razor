@@ -7,7 +7,7 @@
 
 <root>
 	<div class="header">
-		<div class="title">Pong</div>
+		<div class="title">Hit the Ball</div>
 	</div>
 
 	<div class="body">
@@ -24,7 +24,7 @@
 				<div class="games">
 					<div class="button" onclick="@(() => Scene.LoadFromFile("scenes/Lobby.scene"))">
 						<img class="icon" src="" alt="p42"/>
-						<label class="name">Pong for Two</label>
+						<label class="name">#mode.twoplayers</label>
 					</div>
 
 					@* <div class="button">
@@ -43,7 +43,7 @@
 
 			<div class="panel">
 				<div class="option color">
-					<label class="option name">Paddle Color:</label>
+					<label class="option name">#settings.color</label>
 					<div class="button" onclick="@(() => TogglePalette())">
 						<div class="color @GameSettings.Color"></div>
 					</div>					
@@ -51,7 +51,7 @@
 
 				<div class="option sens">
 					@* <div class="button reset" onclick="@(() => { ResetSens(1.0f); })">R</div> *@
-					<label class="option name">Sensitivity:</label>
+					<label class="option name">#settings.sensitivity</label>
 					<div class="adjuster">
 						<div class="option adjust" onclick=@(() => SetSens("decrement", 0.1f, 0.1f))>&#60;</div>
 						<div class="option value">@Sensitivity</div>

@@ -40,7 +40,7 @@
 {
 	public Connection PlayerHost { get; set; } 
 	public Connection PlayerGuest { get; set; } 
-	GameObject gameManager;
+	[Property] GameObject gameManager;
 	[Sync] public int HostScore {get; set;}
 	[Sync] public int GuestScore {get; set;}
 

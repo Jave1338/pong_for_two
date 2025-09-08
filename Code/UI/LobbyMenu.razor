@@ -14,9 +14,11 @@
 		
 		<div class="subtitle">
 
-			<div class="game"><label>#lobby.game</label> Pong for Two</div>
-			
-			<div class="gamemode"><label>#lobby.mode</label> @NetworkManager.Instance.GameMode</div>
+			<div class="mode">
+				<label>#lobby.mode</label> 
+				<label>#mode.twoplayers</label>
+			</div>
+			<div class="mode">@NetworkManager.Instance.GameMode</div>
 			
 		</div>
 
@@ -130,7 +132,7 @@
 			}
 			else
 			{
-				<div class="button disabled">>#lobby.settings.nothost</div>
+				<div class="button disabled">#lobby.settings.nothost</div>
 			}
 
 		</div>
@@ -304,9 +306,9 @@
 	void OnPlay()
 	{
 		@* GameSettings.MaxPlayers = MaxPlayers; *@
-		GameSettings.MaxRounds = MaxRounds;
+		@* GameSettings.MaxRounds = MaxRounds;
 		GameSettings.Speed = Speed;
-		GameSettings.Acceleration = Acceleration;
+		GameSettings.Acceleration = Acceleration; *@
 
 		SceneLoadOptions load = new SceneLoadOptions();
 		load.SetScene("scenes/game.scene");

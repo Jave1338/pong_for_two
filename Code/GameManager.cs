@@ -4,6 +4,7 @@ namespace Sandbox;
 
 public sealed class GameManager : Component
 {
+	[Property] public string sceneName;
 	[Property] GameObject bot;
 	[Property] GameObject gameOver;
 

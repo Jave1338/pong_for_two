@@ -94,16 +94,11 @@ LobbyMenu
 		font-weight: bold;
 		color: $text-muted;
 		
-		.game
+		.mode
 		{
 			align-items: center;
 			flex-direction: row;
 			margin: 5px 0px 10px 0px;
-			gap: 5px;
-		}
-
-		.gamemode
-		{
 			gap: 5px;
 		}
 	}
