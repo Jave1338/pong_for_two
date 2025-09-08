@@ -14,26 +14,12 @@
 			<div class="player">
 				@if( player.IsHost )
 				{
-					@if (Connection.Local == player)
-					{
-						<div class="name">@player.DisplayName (you)</div>
-					}
-					else
-					{
-						<div class="name">@player.DisplayName</div>
-					}
+					<div class="name">@player.DisplayName</div>
 					<div class="score">@HostScore</div>
 				}
 				else
 				{
-					@if (Connection.Local == player)
-					{
-						<div class="name">@player.DisplayName (you)</div>
-					}
-					else
-					{
-						<div class="name">@player.DisplayName</div>
-					}
+					<div class="name">@player.DisplayName</div>
 					<div class="score">@GuestScore</div>
 				}
 			</div>
@@ -41,7 +27,7 @@
 		@if ( Connection.All.Count < 2 )
 		{
 			<div class="player">
-				<div class="name">Bot</div>
+				<div class="name">#hud.bot</div>
 				<div class="score">@GuestScore</div>
 			</div>
 		}

@@ -8,16 +8,16 @@
 <root class="@(isEnabled ? "" : "hidden")">
 	<div class="body">
 		<div class="buttons">
-			<div class="button" onclick="@(() => OnClose())">Resume</div>
-			<div class="button" onclick="@(() => OnResetBall())">Reset Ball</div>
-			<div class="button" onclick="@(() => OnQuit())">Quit</div>
+			<div class="button" onclick="@(() => OnClose())">#menu.resume</div>
+			<div class="button" onclick="@(() => OnResetBall())">#menu.resetball</div>
+			<div class="button" onclick="@(() => OnQuit())">#menu.quit</div>
 		</div>
 	</div>
 
 	<div class="panel right">
 		<div class="option">
 			@* <div class="button reset" onclick="@(() => { ResetSens(ref Sensitivity, 1.0f); })">R</div> *@
-			<label class="option name">Sensitivity:</label>
+			<label class="option name">#settings.sensitivity</label>
 			<div class="adjuster">
 				<label class="option adjust" onclick=@(() => SetSens("decrement", 0.1f, 0.1f))>&#60;</label>
 				<label class="option value">@Sensitivity</label>

@@ -4,11 +4,11 @@
 @namespace Sandbox
 
 <root>
-	<div class="header">Game Over!</div>
+	<div class="header">#gameover.title</div>
 
 	<div class="body">
 		
-		<div class="title">Results:</div>
+		<div class="title">#gameover.results</div>
 			
 		<div class="results">
 			@foreach (var player in Connection.All)
@@ -16,28 +16,14 @@
 				if( player.IsHost )
 				{
 					<div class="player">
-						@if (Connection.Local == player)
-						{
-							<div class="name">@player.DisplayName (you):</div>
-						}
-						else
-						{
-							<div class="name">@player.DisplayName:</div>
-						}
+						<div class="name">@player.DisplayName:</div>
 						<div class="score">@HostScore</div>
 					</div>
 				}
 				else
 				{
 					<div class="player">
-						@if (Connection.Local == player)
-						{
-							<div class="name">@player.DisplayName (you):</div>
-						}
-						else
-						{
-							<div class="name">@player.DisplayName:</div>
-						}
+						<div class="name">@player.DisplayName:</div>
 						<div class="score">@GuestScore</div>
 					</div>
 				}
@@ -45,7 +31,7 @@
 			@if ( Connection.All.Count < 2 )
 			{
 				<div class="player">
-					<div class="name">Bot:</div>
+					<div class="name">#hud.bot</div>
 					<div class="score">@GuestScore</div>
 				</div>
 			}
@@ -56,20 +42,20 @@
 
 		@if (Networking.IsHost)
 		{
-			<div class="button play" onclick="@(() => OnRestart())">Play Again</div>
+			<div class="button play" onclick="@(() => OnRestart())">#gameover.playagain</div>
 		}
 		else
 		{
-			<div class="button disabled">Waiting for the host</div>
+			<div class="button disabled">#lobby.waitingforhost</div>
 		}
 
 		@if (Networking.IsHost)
 		{
-			<div class="button exit" onclick="@(() => OnExit())">Go to Lobby</div>
+			<div class="button exit" onclick="@(() => OnExit())">#gameover.tolobby</div>
 		}
 		else
 		{
-			<div class="button exit" onclick="@(() => OnExit())">Exit Lobby</div>
+			<div class="button exit" onclick="@(() => OnExit())">#lobby.leave</div>
 		}
 
 	</div>

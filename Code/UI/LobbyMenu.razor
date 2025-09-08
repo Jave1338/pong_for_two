@@ -10,13 +10,13 @@
 
 	<div class="header">
 
-		<div class="title">Lobby</div>
+		<div class="title">#lobby.title</div>
 		
 		<div class="subtitle">
 
-			<div class="game">Game: Pong for Two</div>
+			<div class="game"><label>#lobby.game</label> Pong for Two</div>
 			
-			<div class="gamemode">Mode: @NetworkManager.Instance.GameMode</div>
+			<div class="gamemode"><label>#lobby.mode</label> @NetworkManager.Instance.GameMode</div>
 			
 		</div>
 
@@ -52,7 +52,7 @@
 
 			@if (Connection.All.Count < 2)
 			{
-				<div class="invite">Invite a friend to play in multiplayer mode!</div>
+				<div class="invite">#lobby.invitefriend</div>
 			}
 
 		</div>
@@ -60,7 +60,7 @@
 		<div class="settings">
 
 			<div class="option">
-				<label class="option_name">Lobby Privacy:</label>
+				<label class="option_name">#lobby.settings.privacy</label>
 				<div class="adjuster">
 					<label class="option_adjust" onclick='@(() => SetLobbyPrivacy("left"))'>&#60;</label>
 					<label class="option_value">@LobbyPrivacy</label>
@@ -78,7 +78,7 @@
 			</div> *@
 
 			<div class="option">
-				<label class="option_name">Rounds:</label>
+				<label class="option_name">#lobby.settings.rounds</label>
 				<div class="adjuster">
 					<label class="option_adjust" onclick="@(() => { var rounds = MaxRounds; ChangeValue("decrement", ref rounds, 1, 10); MaxRounds = rounds; })">-10</label>
 					<label class="option_adjust" onclick="@(() => { var rounds = MaxRounds; ChangeValue("decrement", ref rounds, 1, 1); MaxRounds = rounds; })">-1</label>
@@ -89,7 +89,7 @@
 			</div>
 
 			<div class="option">
-				<label class="option_name">Ball Speed:</label>
+				<label class="option_name">#lobby.settings.ballspeed</label>
 				<div class="adjuster">
 					<label class="option_adjust" onclick="@(() => { var speed = Speed; ChangeValue("decrement", ref speed, 100, 100); Speed = speed; })">-100</label>
 					<label class="option_adjust" onclick="@(() => { var speed = Speed; ChangeValue("decrement", ref speed, 100, 10); Speed = speed; })">-10</label>
@@ -109,25 +109,28 @@
 			</div> *@
 
 			<div class="option">
-				<label class="option_name">Ball Acceleration:</label>
+				<label class="option_name">#lobby.settings.ballacceleration</label>
 				<div class="adjuster">
 					<label class="option_adjust" onclick=@( () => ChangeAcceleration() )>&#60;</label>
-					<label class="option_value">@accelerationText</label>
+					@if (GameSettings.Acceleration)
+					{
+						<label class="option_value">#lobby.settings.ballacceleration.true</label>
+					}
+					else
+					{
+						<label class="option_value">#lobby.settings.ballacceleration.false</label>
+					}
 					<label class="option_adjust" onclick=@( () => ChangeAcceleration() )>&#62;</label>
 				</div>
 			</div>
 
 			@if (Networking.IsHost)
 			{
-				<div class="button reset" onclick="@(() => OnReset())">
-					Reset to default
-				</div>
+				<div class="button reset" onclick="@(() => OnReset())">#lobby.settings.reset</div>
 			}
 			else
 			{
-				<div class="button disabled">
-					<label class="reset">You are not the host</label>
-				</div>
+				<div class="button disabled">>#lobby.settings.nothost</div>
 			}
 
 		</div>
@@ -139,17 +142,17 @@
 		<div class="left">
 			@if (Networking.IsHost)
 			{
-				<div class="button play" onclick="@(() => OnPlay())">Play</div>
+				<div class="button play" onclick="@(() => OnPlay())">#menu.play</div>
 			}
 			else
 			{
-				<div class="button disabled">Waiting for the host</div>
+				<div class="button disabled">#lobby.waitingforhost</div>
 			}
 
-			<div class="button color" onclick="@(() => TogglePalette())" style="color: @GameSettings.Color;">Change color</div>
+			<div class="button color" onclick="@(() => TogglePalette())" style="color: @GameSettings.Color;">#lobby.changecolor</div>
 		</div>
 
-		<div class="button exit" onclick="@(() => OnLeaveLobby())">Leave</div>
+		<div class="button exit" onclick="@(() => OnLeaveLobby())">#lobby.leave</div>
 
 	</div>
 
@@ -172,7 +175,7 @@
 				<div class="color white" onclick="@(() => PickColor("white"))"></div>
 			</div>
 
-			<div class="button back" onclick="@(() => TogglePalette())">Back</div>
+			<div class="button back" onclick="@(() => TogglePalette())">#menu.back</div>
 		</div>
 	</div>
 </root>
@@ -184,7 +187,6 @@
 	[Sync] public int MaxRounds { get; set; }
 	[Sync] public int Speed { get; set; }
 	[Sync] public bool Acceleration { get; set; }
-	[Sync] public string accelerationText { get; set; }
 	bool paletteVisible = false;
 	[Property, ImageAssetPath] string pingIcon {get; set;}
 
@@ -323,7 +325,6 @@
 		GameSettings.MaxRounds = MaxRounds;
 		GameSettings.Speed = Speed;
 		GameSettings.Acceleration = Acceleration;
-		accelerationText = Acceleration ? "Yes" : "No";
 	}
 
 	/// <summary>

@@ -13,9 +13,9 @@
 	<div class="body">
 
 		<div class="buttons">
-			<div class="button play" onclick="@(() => OnPlay(true))">Play</div>
-			<div class="button settings" onclick="@(() => OnSettings(true))">Settings</div>
-			<div class="button quit" onclick="@(() => OnQuit())">Quit</div>
+			<div class="button play" onclick="@(() => OnPlay(true))">#menu.play</div>
+			<div class="button settings" onclick="@(() => OnSettings(true))">#menu.settings</div>
+			<div class="button quit" onclick="@(() => OnQuit())">#menu.quit</div>
 		</div>
 
 		<div class="panel_background @(playVisible ? "" : "hidden")">
@@ -34,7 +34,7 @@
 				</div>
 				
 
-				<div class="button back" onclick="@(() => OnPlay(false))">Back</div>
+				<div class="button back" onclick="@(() => OnPlay(false))">#menu.back</div>
 			</div>
 
 		</div>
@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				
-				<div class="button back" onclick="@(() => OnSettings(false))">Back</div>
+				<div class="button back" onclick="@(() => OnSettings(false))">#menu.back</div>
 			</div>
 
 			<div class="palette @(paletteVisible ? "" : "hidden")">
@@ -80,7 +80,7 @@
 					<div class="color white" onclick="@(() => PickColor("white"))"></div>
 				</div>
 
-				<div class="button back" onclick="@(() => TogglePalette())">Back</div>
+				<div class="button back" onclick="@(() => TogglePalette())">#menu.back</div>
 			</div>
 
 		</div>
