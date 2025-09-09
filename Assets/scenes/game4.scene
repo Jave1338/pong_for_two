@@ -32,6 +32,7 @@
           "OnComponentStart": null,
           "OnComponentUpdate": null,
           "sceneName": "game4"
+          "OnComponentUpdate": null
         },
         {
           "__type": "Sandbox.NetworkHelper",
