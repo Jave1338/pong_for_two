@@ -70,7 +70,7 @@
         "__enabled": true,
         "border": 130,
         "isBot": false,
-        "lockXAxis": false,
+        "lockXAxis": true,
         "lockYAxis": false,
         "OnComponentDestroy": null,
         "OnComponentDisabled": null,

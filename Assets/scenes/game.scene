@@ -2062,14 +2062,6 @@
               "Type": "Component",
               "IdValue": "6e060a8d-51c1-4ed8-800a-e63565d5455f"
             },
-            "Property": "borderY",
-            "Value": 133.5
-          },
-          {
-            "Target": {
-              "Type": "Component",
-              "IdValue": "6e060a8d-51c1-4ed8-800a-e63565d5455f"
-            },
             "Property": "isBot",
             "Value": true
           }
